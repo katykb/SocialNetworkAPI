@@ -7,7 +7,7 @@ const {
   deleteThoughtById,
   getReaction,
   deleteReactionById,
-} = require("../controllers/usrController.js");
+} = require("../../controllers/userController.js");
 
 router.route("/getThoughts").get(getThoughts).post(postNewThought);
 

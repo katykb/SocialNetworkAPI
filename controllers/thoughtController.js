@@ -12,15 +12,15 @@ module.exports = {
     Thought.findOne({ _id: req.params.thoughtId })
       .select('-__v')
       .then((course) =>
-        !thought
+        !Thought
           ? res.status(404).json({ message: 'No thought with that ID' })
-          : res.json(thought)
+          : res.json(Thought)
       )
       .catch((err) => res.status(500).json(err));
   },
   // Create a thought
   postNewThought(req, res) {
-    thought.create(req.body)
+    Thought.create(req.body)
       .then((thought) => res.json(thought))
       .catch((err) => {
         console.log(err);
