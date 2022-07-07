@@ -1,5 +1,5 @@
 const User = require('./User');
-const Reaction = require('./Reaction');
+const User = require('../routes/apiRoutes/userRoutes');
 const Thought = require('./Thought');
 
 module.exports = { User, Reaction, Thought };
