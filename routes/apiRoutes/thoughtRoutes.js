@@ -9,9 +9,9 @@ const {
   addReaction,
   deleteReactionById,
 
-  } = require("../../controllers/userController.js");
+  } = require("../../controllers/thoughtController");
 
-router.route("/getThoughts").get(getThoughts);
+router.route("/").get(getThoughts).post(postNewThought);
 
 router.route("/:userId").post(postNewThought);
 
@@ -19,11 +19,14 @@ router
   .route("/:id")
   .get(getThoughtById)
   .delete(deleteThoughtById)
-  .update(updateThoughtById);
+  .put(updateThoughtById);
 
 router
   .route("/:id/reactions")
   .post(addReaction)
+
+  router
+  .route("/:id/reactions/reactionId")
   .delete(deleteReactionById);
 
 module.export = router;
