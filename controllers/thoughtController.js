@@ -55,10 +55,10 @@ module.exports = {
   addReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.id },
-      { $push: { reactions: req.body } },
+      { $addToSet: { reaction: req.body.reactionBody} },
       { runValidators: true, new: true }
     )
-      .then((reaction) => res.json(reaction))
+      .then((thought) => res.json(thought))
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
@@ -73,7 +73,7 @@ module.exports = {
       .then((reaction) =>
         !reaction
           ? res.status(404).json({ message: "No reaction with that ID" })
-          : User.deleteMany({ _id: { $in: thought.users } })
+          : User.deleteMany({ _id: { $in: Thought.users } })
       )
       .then(() => res.json({ message: "User and Reactions deleted!" }))
       .catch((err) => res.status(500).json(err));
