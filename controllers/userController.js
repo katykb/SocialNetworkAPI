@@ -26,18 +26,12 @@ module.exports = {
   getUserById(req, res) {
     User.findOne({ _id: req.params.id })
       .select("-__v")
-      .then(async (user) =>
-        !user
+      .then((user) =>
+        !Thought
           ? res.status(404).json({ message: "No user with that ID" })
-          : res.json({
-              user,
-              friend: await friends(req.params.friends),
-            })
+          : res.json(user)
       )
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).json(err);
-      });
+      .catch((err) => res.status(500).json(err));
   },
   // create a new user
   postNewUser(req, res) {
