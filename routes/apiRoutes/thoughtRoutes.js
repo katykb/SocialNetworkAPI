@@ -13,8 +13,6 @@ const {
 
 router.route("/").get(getThoughts).post(postNewThought);
 
-//router.route("/:id").post(postNewThought);
-
 router
   .route("/:id")
   .get(getThoughtById)
