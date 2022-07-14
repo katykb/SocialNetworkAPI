@@ -22,7 +22,7 @@ module.exports = {
   postNewThought(req, res) {
     Thought.create(req.body)
       .then((thought) => {
-       return User.findOneAndUpdate(
+        return User.findOneAndUpdate(
           { username: req.body.username },
           { $addToSet: { thoughts: thought._id } }
         ).then((user) => res.json(user));
@@ -61,30 +61,28 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  addReaction({params}, res) {
+  addReaction({ params, body }, res) {
     Thought.findOneAndUpdate(
-      { _id: req.params.id },
-      { $addToSet: { reactions: req.body.reactionBody } },
-      { runValidators: true, new: true }
+      { _id: params.id },
+      { $addToSet: { reactions: body } },
+      { new: true, runValidators: true }
     )
-      .then((thought) => res.json(thought))
+ 
+      .then((thought) => {res.status(200).json(thought)})
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
       });
   },
   deleteReactionById(req, res) {
+    console.log(req.params)
     Thought.findOneAndUpdate(
       { _id: req.params.id },
       { $pull: { reactions: { reactionId: req.params.reactionId } } },
       { runValidators: true, new: true }
     )
-      .then((reaction) =>
-        !reaction
-          ? res.status(404).json({ message: "No reaction with that ID" })
-          : User.deleteMany({ _id: { $in: Thought.users } })
-      )
-      .then(() => res.json({ message: "User and Reactions deleted!" }))
+     
+      .then(() => res.json({ message: " Reaction deleted!" }))
       .catch((err) => res.status(500).json(err));
   },
 };
